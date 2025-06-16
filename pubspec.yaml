@@ -1,0 +1,66 @@
+name: webkit
+description: A new Flutter project.
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.5.0
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.8
+  shared_preferences: ^2.3.2
+  provider: ^6.1.2
+  url_launcher: ^6.3.0
+  google_maps_flutter: ^2.9.0
+  flutter_blurhash: ^0.8.2
+  feather_icons: ^1.2.0
+  url_strategy: ^0.3.0
+  intl: ^0.19.0
+  flutter_colorpicker: ^1.1.0
+  flutter_pagination: ^0.0.8
+  qr_flutter: ^4.1.0
+  file_picker: ^8.1.2
+  font_awesome_flutter: ^10.7.0
+  table_calendar: ^3.1.2
+  maps_launcher: ^2.2.1
+  socket_io_client: ^2.0.3+1
+  get: ^4.6.6
+  appflowy_board: ^0.1.2
+  timelines: ^0.1.0
+  countup: ^0.1.4
+  image_picker: ^1.1.2
+  flutter_lucide: ^1.4.0
+  google_fonts: ^6.2.1
+  fl_chart: ^0.69.0
+  flutter_svg: ^2.0.10+1
+  flutter_quill: ^10.5.13
+
+  # ✅ Updated Syncfusion packages
+  syncfusion_flutter_charts: ^27.1.41
+  syncfusion_flutter_maps: ^27.1.41
+  syncfusion_flutter_calendar: ^27.1.41
+  syncfusion_flutter_datepicker: ^27.1.41
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/lang/
+    - assets/images/logo/
+    - assets/images/dummy/
+    - assets/datas/
+    - assets/datas/australia.json
+    - assets/images/shopping_images/
+    - assets/images/food/
+    - assets/icon/

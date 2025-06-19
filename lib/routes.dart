@@ -4,6 +4,8 @@ import 'package:webkit/views/apps/CRM/contacts_page.dart';
 import 'package:webkit/views/apps/CRM/opportunities.dart';
 import 'package:webkit/views/apps/calender.dart';
 import 'package:webkit/views/apps/chat_page.dart';
+import 'package:webkit/views/apps/contacts/add_member.dart';
+import 'package:webkit/views/apps/contacts/edit_member.dart';
 import 'package:webkit/views/apps/contacts/edit_profile.dart';
 import 'package:webkit/views/apps/contacts/member_list.dart';
 import 'package:webkit/views/apps/contacts/profile.dart';
@@ -192,11 +194,21 @@ getPageRoute() {
         name: '/contacts/members',
         page: () => MemberList(),
         middlewares: [AuthMiddleware()]),
+     GetPage(
+        name: '/edit_member',
+        page: () => EditMember(),
+        middlewares: [AuthMiddleware()]),
 
     GetPage(
         name: '/contacts/edit-profile',
         page: () => EditProfile(),
         middlewares: [AuthMiddleware()]),
+
+        GetPage(
+        name: '/contacts/addmember',
+        page: () => AddMember(),
+        middlewares: [AuthMiddleware()]),
+
 
     ///---------------- CRM ----------------///
 
@@ -327,7 +339,9 @@ getPageRoute() {
 
     ///---------------- Other ----------------///
 
-    GetPage(
+   
+    
+     GetPage(
         name: '/other/basic_tables',
         page: () => BasicTable(),
         middlewares: [AuthMiddleware()]),

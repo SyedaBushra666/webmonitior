@@ -149,6 +149,16 @@ class _LeftBarState extends State<LeftBar> with SingleTickerProviderStateMixin, 
                         isCondensed: widget.isCondensed,
                       ),
                       MenuItem(
+                        title: "Add Member".tr(),
+                        route: '/contacts/addmember',
+                        isCondensed: widget.isCondensed,
+                      ),
+                       MenuItem(
+                        title: "Edit Member".tr(),
+                        route: '/contacts/edit_member',
+                        isCondensed: widget.isCondensed,
+                      ),
+                      MenuItem(
                         title: "profile".tr(),
                         route: '/contacts/profile',
                         isCondensed: widget.isCondensed,

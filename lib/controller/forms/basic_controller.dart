@@ -11,17 +11,62 @@ enum Gender {
   const Gender();
 }
 
+// enum User {
+//   admin,
+//   manager,
+//   user,
+//   other;
+//   const User();
+// }
+
 enum TextFieldBorderType { outline, underline, none }
+
+enum UserRole {
+  admin,
+  manager,
+  user,
+  observer,
+}
+
+class Project {
+  final String id;
+  final String name;
+
+  Project({required this.id, required this.name});
+}
 
 class BasicController extends MyController {
   FloatingLabelBehavior floatingLabelBehavior = FloatingLabelBehavior.always;
   TextFieldBorderType borderType = TextFieldBorderType.outline;
+
+  UserRole? selectedRole;
+
+  void onSelectRole(UserRole role) {
+    selectedRole = role;
+    update(); // or setState(() {}) if not using GetX
+  }
+
+  Project? selectedProject;
+  List<Project> projectList = [
+    Project(id: '1', name: 'Design System'),
+    Project(id: '2', name: 'Marketing Website'),
+    Project(id: '3', name: 'Internal Tools'),
+  ];
+
+  void onSelectProject(Project project) {
+    selectedProject = project;
+    update(); // or setState() / notifyListeners()
+  }
+
   bool showPassword = false,
       publicStatus = false,
       newsletter = true,
       checked = false;
 
+//
   Gender selectedGender = Gender.male;
+  // User selectedUserRole = User.admin;
+
   bool filled = false;
   DateTime? selectedDate;
   TimeOfDay? selectedTime;
@@ -49,6 +94,11 @@ class BasicController extends MyController {
     selectedGender = value ?? selectedGender;
     update();
   }
+
+  //   void onChangeUserRole(User? value) {
+  //   selectedUserRole =  value ?? selectedUserRole;
+  //   update();
+  // }
 
   void onChangeLabelType(FloatingLabelBehavior value) {
     floatingLabelBehavior = value;

@@ -11,6 +11,7 @@ import 'package:webkit/helpers/storage/local_storage.dart';
 import 'package:webkit/helpers/theme/app_notifier.dart';
 import 'package:webkit/helpers/theme/app_style.dart';
 import 'package:webkit/helpers/theme/theme_customizer.dart';
+import 'package:webkit/views/apps/contacts/member_list.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -41,7 +42,9 @@ class MyApp extends StatelessWidget {
           darkTheme: AppTheme.darkTheme,
           themeMode: ThemeCustomizer.instance.theme,
           navigatorKey: NavigationService.navigatorKey,
-          initialRoute: "/dashboard",
+          home: MemberList(),
+          //initialRoute: "/contacts/members",
+          // "/dashboard",
           getPages: getPageRoute(),
           // onGenerateRoute: (_) => generateRoute(context, _),
           builder: (context, child) {

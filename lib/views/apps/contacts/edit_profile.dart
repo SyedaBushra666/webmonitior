@@ -65,7 +65,7 @@ class _EditProfileState extends State<EditProfile>
                     ),
                     MyBreadcrumb(
                       children: [
-                        MyBreadcrumbItem(name: "Contact"),
+                        MyBreadcrumbItem(name: "Employee"),
                         MyBreadcrumbItem(name: "Edit Profile", active: true),
                       ],
                     ),

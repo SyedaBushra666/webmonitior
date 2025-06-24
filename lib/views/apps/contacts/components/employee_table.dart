@@ -4,10 +4,13 @@ import 'package:get/get.dart';
 import 'package:webkit/controller/employees/member_controller.dart';
 import 'package:webkit/helpers/utils/ui_mixins.dart';
 import 'package:webkit/helpers/widgets/my_card.dart';
+import 'package:webkit/helpers/widgets/my_flex_item.dart';
 import 'package:webkit/helpers/widgets/my_spacing.dart';
-import 'package:webkit/helpers/widgets/my_text.dart';
-import 'package:webkit/helpers/utils/my_shadow.dart';
+import 'package:webkit/helpers/widgets/responsive.dart';
 import 'package:webkit/models/member.dart';
+import 'package:webkit/views/apps/contacts/components/alert_dialogue_delete.dart';
+import 'package:webkit/views/apps/contacts/components/member_header_bar.dart';
+import 'package:webkit/views/apps/contacts/edit_member.dart';
 
 class EmployeeTable extends StatefulWidget {
   const EmployeeTable({super.key});
@@ -31,23 +34,35 @@ class _EmployeeTableState extends State<EmployeeTable> with UIMixin {
     return GetBuilder<MemberController>(
       builder: (controller) {
         return MyCard(
-          paddingAll: 20,
-          borderRadiusAll: 12,
-          shadow: MyShadow(elevation: 0.5),
+          paddingAll: 0,
           child: Column(
             children: [
-              _buildHeaderRow(),
-              const Divider(height: 1),
-              ...controller.members.asMap().entries.map((entry) {
-                final user = entry.value;
-                final isLast = entry.key == controller.members.length - 1;
-                return Column(
-                  children: [
-                    _buildDataRow(user),
-                    if (!isLast) const Divider(height: 1),
-                  ],
-                );
-              }),
+              Padding(
+                padding: const EdgeInsets.all(14.0),
+                child: Header(),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 14, bottom: 14, right: 20),
+                child: MemberHeaderBar(),
+              ),
+              MySpacing.height(5),
+              Table(
+                columnWidths: {
+                  0: FlexColumnWidth(1), //name
+                  1: FlexColumnWidth(1), //email
+                  2: FlexColumnWidth(1),
+                  3: FlexColumnWidth(1),
+                  4: FlexColumnWidth(1),
+                },
+                children: [
+                  _buildHeaderRow(),
+                  
+                  ...controller.members.asMap().entries.map((entry) {
+                    final user = entry.value;
+                    return _buildDataRow(user);
+                  }),
+                ],
+              ),
             ],
           ),
         );
@@ -55,113 +70,168 @@ class _EmployeeTableState extends State<EmployeeTable> with UIMixin {
     );
   }
 
-  Widget _buildHeaderRow() {
-    return Padding(
-      padding: MySpacing.xy(12, 14),
-      child: Row(
-        children: const [
-          _HeaderCell("Name", flex: 2),
-          _HeaderCell("Role"),
-          _HeaderCell("Project"),
-          _HeaderCell("Email", flex: 2),
-          _HeaderCell("Status"),
-          _HeaderCell("Actions", flex: 2),
-        ],
-      ),
+  TableRow _buildHeaderRow() {
+    return TableRow(
+      decoration: BoxDecoration(color: Colors.grey.shade400),
+      children: [
+        Padding(
+            padding: EdgeInsets.only(top: 8, left: 12, right: 8, bottom: 8),
+            child: Text("Name", style: TextStyle(fontWeight: FontWeight.bold))),
+        Padding(
+            padding: EdgeInsets.all(8),
+            child:
+                Text("Email", style: TextStyle(fontWeight: FontWeight.bold))),
+        Padding(
+            padding: EdgeInsets.all(8),
+            child: Text("Role", style: TextStyle(fontWeight: FontWeight.bold))),
+        Padding(
+            padding: EdgeInsets.all(8),
+            child: Text("Projects",
+                style: TextStyle(fontWeight: FontWeight.bold))),
+        Padding(
+            padding: EdgeInsets.all(8),
+            child:
+                Text("Status", style: TextStyle(fontWeight: FontWeight.bold))),
+        Padding(
+            padding: EdgeInsets.all(8),
+            child:
+                Text("Actions", style: TextStyle(fontWeight: FontWeight.bold))),
+      ],
     );
   }
 
-  Widget _buildDataRow(Member user) {
-    return Padding(
-      padding: MySpacing.xy(12, 14),
-      child: Row(
-        children: [
-          _nameCell("${user.firstName} ${user.lastName}"),
-          _dataCell(user.role),
-          _dataCell(user.project),
-          _dataCell(user.email, flex: 2),
-          _statusCell(user.isActive),
-          Expanded(
-            flex: 2,
-            child: Row(
-              children: [
-                _iconBtn(Icons.edit_outlined, contentTheme.primary, "Edit"),
-                _iconBtn(Icons.delete_outline, contentTheme.red, "Delete"),
-                _iconBtn(LucideIcons.ellipsis, contentTheme.primary, "View"),
-              ],
-            ),
-          ),
-        ],
-      ),
+  Widget _buildInlineActions(String id) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        _actionIcon(LucideIcons.eye, Colors.blueGrey, "View", () {
+           Get.toNamed('/view-member');
+        }),
+        _actionIcon(LucideIcons.pencil, Colors.orange, "Edit", () {
+          Get.toNamed('/edit_member/$id');
+
+
+        }),
+        _actionIcon(LucideIcons.trash, Colors.redAccent, "Delete", () {
+          showAlertDialogDelete(
+            context: context,
+            userName: "Bushra Syeda",
+            userEmail: "bushra@example.com",
+            onDelete: () {
+              // Your delete logic here
+            },
+          );
+        }),
+      ],
     );
   }
 
-  Widget _nameCell(String name) {
-    return Expanded(
-      flex: 2,
-      child: Row(
-        children: [
-          CircleAvatar(
-            radius: 16,
-            backgroundColor: contentTheme.primary.withOpacity(0.1),
-            child: MyText.labelLarge(
-              name.isNotEmpty ? name[0] : "?",
-              color: contentTheme.primary,
-            ),
-          ),
-          MySpacing.width(12),
-          MyText.bodyMedium(name),
-        ],
-      ),
-    );
-  }
-
-  Widget _dataCell(String? value, {int flex = 1}) {
-    return Expanded(
-      flex: flex,
-      child: MyText.bodyMedium(value ?? "-", fontWeight: 500),
-    );
-  }
-
-  Widget _statusCell(bool isActive) {
-    return Expanded(
-      flex: 1,
-      child: MyText.bodyMedium(
-        isActive ? "Active" : "Inactive",
-        color: isActive ? contentTheme.success : contentTheme.red,
-        fontWeight: 600,
-      ),
-    );
-  }
-
-  Widget _iconBtn(IconData iconData, Color color, String tooltip) {
+  Widget _actionIcon(
+      IconData icon, Color color, String tooltip, VoidCallback onTap) {
     return Tooltip(
       message: tooltip,
-      child: IconButton(
-        icon: Icon(iconData, size: 18, color: color),
-        onPressed: () {},
-        splashRadius: 18,
+      waitDuration: Duration(milliseconds: 300),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 4),
+        child: Material(
+          color: color.withOpacity(0.1),
+          borderRadius: BorderRadius.circular(8),
+          child: InkWell(
+            borderRadius: BorderRadius.circular(8),
+            onTap: onTap,
+            child: Padding(
+              padding: const EdgeInsets.all(6),
+              child: Icon(icon, size: 16, color: color),
+            ),
+          ),
+        ),
       ),
+    );
+  }
+
+  TableRow _buildDataRow(Member user) {
+    return TableRow(
+      children: [
+        Padding(
+            padding: EdgeInsets.only(top: 8, left: 12, right: 8, bottom: 8),
+            child: Text("${user.firstName}  ${user.lastName}")),
+        Padding(padding: EdgeInsets.all(8), child: Text(user.email)),
+        Padding(padding: EdgeInsets.all(8), child: Text(user.role)),
+        Padding(padding: EdgeInsets.all(8), child: Text(user.project)),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: _buildStatusCell(user.isActive),
+        ),
+        Padding(padding: EdgeInsets.all(8), child: _buildInlineActions(user.id))
+      ],
     );
   }
 }
 
-class _HeaderCell extends StatelessWidget {
-  final String title;
-  final int flex;
+Widget _buildStatusCell(bool isActive) {
+  return Row(
+    children: [
+      Container(
+        width: 6,
+        height: 6,
+        margin: EdgeInsets.only(right: 8),
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          color: isActive ? Colors.green : Colors.yellow,
+        ),
+      ),
+      Text(
+        isActive ? "Active" : "Inactive",
+      ),
+    ],
+  );
+}
 
-  const _HeaderCell(this.title, {this.flex = 1, super.key});
+class InviteTable extends StatelessWidget {
+  const InviteTable({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      flex: flex,
-      child: Align(
-        alignment: Alignment.centerLeft,
-        child: MyText.labelMedium(
-          title.toUpperCase(),
-          fontWeight: 700,
-          color: Colors.black87,
+    return MyCard(
+      child: MyFlexItem(
+        child: Table(
+          columnWidths: {
+            0: FlexColumnWidth(1),
+            1: FlexColumnWidth(1),
+            2: FlexColumnWidth(1),
+          },
+          children: [
+            TableRow(
+              children: [
+                Padding(
+                    padding: EdgeInsets.all(8),
+                    child: Text("Name",
+                        style: TextStyle(fontWeight: FontWeight.bold))),
+                Padding(
+                    padding: EdgeInsets.all(8),
+                    child: Text("Email",
+                        style: TextStyle(fontWeight: FontWeight.bold))),
+                Padding(
+                    padding: EdgeInsets.all(8),
+                    child: Text("Role",
+                        style: TextStyle(fontWeight: FontWeight.bold))),
+                Padding(
+                    padding: EdgeInsets.all(8),
+                    child: Text("Status",
+                        style: TextStyle(fontWeight: FontWeight.bold))),
+              ],
+            ),
+            TableRow(
+              children: [
+                Padding(padding: EdgeInsets.all(8), child: Text("Ali")),
+                Padding(
+                    padding: EdgeInsets.all(8), child: Text("ali@example.com")),
+                Padding(padding: EdgeInsets.all(8), child: Text("Admin")),
+                Padding(padding: EdgeInsets.all(8), child: Text("Pending")),
+              ],
+            ),
+            // More rows...
+          ],
         ),
       ),
     );

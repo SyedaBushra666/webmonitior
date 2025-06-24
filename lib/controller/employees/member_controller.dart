@@ -9,10 +9,29 @@ class MemberController extends GetxController {
   // Currently selected member (for editing)
   Member? selectedMember;
 
+  // for tabs 
+
+   var selectedTab = 0.obs;
+
+  void selectTab(int index) {
+    selectedTab.value = index;
+  }
+
   // Selected dropdown values
   RxnString selectedRole = RxnString();
   RxnString selectedProject = RxnString();
+  String selectSize = "All";
+   String selectedStatus = "All";
 
+   void onSelectedSize(String size) {
+    selectSize = size;
+    update();
+  }
+
+   void onSelectedStatus(String status) {
+    selectedStatus = status;
+    update();
+  }
   void loadDummyData() {
     members.value = [
       Member(
@@ -20,7 +39,23 @@ class MemberController extends GetxController {
         firstName: 'Ali',
         lastName: 'Raza',
         email: 'ali@example.com',
-        role: 'Admin',
+        role: 'Organization Admin',
+        project: 'Project A',
+      ),
+        Member(
+        id: '1',
+        firstName: 'Ali',
+        lastName: 'Raza',
+        email: 'ali@example.com',
+        role: 'Organization Admin',
+        project: 'Project A',
+      ),
+        Member(
+        id: '1',
+        firstName: 'Ali',
+        lastName: 'Raza',
+        email: 'ali@example.com',
+        role: 'Organization Admin',
         project: 'Project A',
       ),
       Member(
@@ -28,7 +63,25 @@ class MemberController extends GetxController {
         firstName: 'Sara',
         lastName: 'Khan',
         email: 'sara@example.com',
-        role: 'Member',
+        role: 'Team Member',
+        project: 'Project B',
+        isActive: false,
+      ),
+         Member(
+        id: '4',
+        firstName: 'Umer',
+        lastName: 'Raza',
+        email: 'raxa@example.com',
+        role: 'Team Lead',
+        project: 'Project A',
+        isActive: false,
+      ),
+      Member(
+        id: '3',
+        firstName: 'Sara',
+        lastName: 'Khan',
+        email: 'sara@example.com',
+        role: ' Team Member',
         project: 'Project B',
         isActive: false,
       ),
@@ -50,6 +103,12 @@ class MemberController extends GetxController {
       update();
     }
   }
+
+  Member? findMemberById(String id) {
+  return members.firstWhereOrNull((m) => m.id == id);
+
+}
+
 
   void deleteMember(String id) {
     members.removeWhere((m) => m.id == id);

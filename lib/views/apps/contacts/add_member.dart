@@ -18,6 +18,7 @@ import 'package:webkit/helpers/widgets/my_spacing.dart';
 import 'package:webkit/helpers/widgets/my_text.dart';
 import 'package:webkit/helpers/widgets/my_text_style.dart';
 import 'package:webkit/helpers/widgets/responsive.dart';
+import 'package:webkit/views/apps/contacts/components/role_drop_drown.dart';
 import 'package:webkit/views/layouts/layout.dart';
 
 class AddMember extends StatefulWidget {
@@ -179,119 +180,7 @@ class _AddMemberState extends State<AddMember>
                                             FloatingLabelBehavior.never),
                                   ),
                                   MySpacing.height(20),
-                                  IntrinsicHeight(
-                                    child: Row(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.stretch,
-                                      children: [
-                                        // Role Dropdown
-                                        Expanded(
-                                          child: PopupMenuButton<UserRole>(
-                                            onSelected: controller.onSelectRole,
-                                            itemBuilder:
-                                                (BuildContext context) {
-                                              return UserRole.values
-                                                  .map((role) {
-                                                return PopupMenuItem(
-                                                  value: role,
-                                                  height: 32,
-                                                  child: MyText.bodySmall(
-                                                    role.name.capitalize!,
-                                                    color: theme
-                                                        .colorScheme.onSurface,
-                                                    fontWeight: 600,
-                                                  ),
-                                                );
-                                              }).toList();
-                                            },
-                                            color: theme.cardTheme.color,
-                                            child: MyContainer.bordered(
-                                              padding: MySpacing.xy(12, 8),
-                                              child: Row(
-                                                children: [
-                                                  Expanded(
-                                                    child: Align(
-                                                      alignment:
-                                                          Alignment.centerLeft,
-                                                      child: MyText.labelMedium(
-                                                        controller
-                                                                .selectedRole
-                                                                ?.name
-                                                                .capitalize! ??
-                                                            "Select Role",
-                                                        color: theme.colorScheme
-                                                            .onSurface,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  Icon(
-                                                    LucideIcons.chevron_down,
-                                                    size: 22,
-                                                    color: theme
-                                                        .colorScheme.onSurface,
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        MySpacing.width(
-                                            12), // space between the two dropdowns
-
-                                        // Project Dropdown
-                                        Expanded(
-                                          child: PopupMenuButton<Project>(
-                                            onSelected:
-                                                controller.onSelectProject,
-                                            itemBuilder:
-                                                (BuildContext context) {
-                                              return controller.projectList
-                                                  .map((project) {
-                                                return PopupMenuItem(
-                                                  value: project,
-                                                  height: 32,
-                                                  child: MyText.bodySmall(
-                                                    project.name,
-                                                    color: theme
-                                                        .colorScheme.onSurface,
-                                                    fontWeight: 600,
-                                                  ),
-                                                );
-                                              }).toList();
-                                            },
-                                            color: theme.cardTheme.color,
-                                            child: MyContainer.bordered(
-                                              padding: MySpacing.xy(12, 8),
-                                              child: Row(
-                                                children: [
-                                                  Expanded(
-                                                    child: Align(
-                                                      alignment:
-                                                          Alignment.centerLeft,
-                                                      child: MyText.labelMedium(
-                                                        controller
-                                                                .selectedProject
-                                                                ?.name ??
-                                                            "Select Project",
-                                                        color: theme.colorScheme
-                                                            .onSurface,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  Icon(
-                                                    LucideIcons.chevron_down,
-                                                    size: 22,
-                                                    color: theme
-                                                        .colorScheme.onSurface,
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
+                                  RoleDropDown(),
                                    MySpacing.height(20),
                                   Align(
                                     alignment: Alignment.centerRight,

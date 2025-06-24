@@ -52,13 +52,13 @@ class _ContactsPageState extends State<ContactsPage>
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     MyText.titleMedium(
-                      "Contact",
+                      "Members",
                       fontWeight: 600,
                     ),
                     MyBreadcrumb(
                       children: [
-                        MyBreadcrumbItem(name: "CRM"),
-                        MyBreadcrumbItem(name: "Contact", active: true),
+                        MyBreadcrumbItem(name: "Employee"),
+                        MyBreadcrumbItem(name: "Members", active: true),
                       ],
                     ),
                   ],
@@ -71,7 +71,7 @@ class _ContactsPageState extends State<ContactsPage>
                   contentPadding: false,
                   children: [
                     MyFlexItem(
-                      sizes: "xxl-8 xl-8",
+                     // sizes: "xxl-8 xl-8",
                       child: Column(
                         children: [
                           if (controller.data != null)
@@ -99,125 +99,14 @@ class _ContactsPageState extends State<ContactsPage>
                                     ),
                                   ),
                                   MyButton(
-                                    onPressed: () => showDialog(
-                                      context: context,
-                                      builder: (context) => AlertDialog(
-                                        clipBehavior:
-                                            Clip.antiAliasWithSaveLayer,
-                                        title: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            MyText.titleMedium(
-                                              "Add item",
-                                            ),
-                                          ],
-                                        ),
-                                        titlePadding: MySpacing.xy(16, 12),
-                                        insetPadding: MySpacing.y(300),
-                                        actionsPadding: MySpacing.xy(190, 16),
-                                        contentPadding: MySpacing.x(16),
-                                        content: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            MyText.bodyMedium("Name"),
-                                            MySpacing.height(8),
-                                            TextFormField(
-                                              keyboardType:
-                                                  TextInputType.emailAddress,
-                                              decoration: InputDecoration(
-                                                labelText: "Enter Name",
-                                                labelStyle:
-                                                    MyTextStyle.bodySmall(
-                                                        xMuted: true),
-                                                border: outlineInputBorder,
-                                                contentPadding:
-                                                    MySpacing.all(16),
-                                                isCollapsed: true,
-                                                floatingLabelBehavior:
-                                                    FloatingLabelBehavior.never,
-                                              ),
-                                            ),
-                                            MySpacing.height(16),
-                                            MyText.bodyMedium("Email"),
-                                            MySpacing.height(8),
-                                            TextFormField(
-                                              keyboardType:
-                                                  TextInputType.emailAddress,
-                                              decoration: InputDecoration(
-                                                labelText: "Enter Email",
-                                                labelStyle:
-                                                    MyTextStyle.bodySmall(
-                                                        xMuted: true),
-                                                border: outlineInputBorder,
-                                                contentPadding:
-                                                    MySpacing.all(16),
-                                                isCollapsed: true,
-                                                floatingLabelBehavior:
-                                                    FloatingLabelBehavior.never,
-                                              ),
-                                            ),
-                                            MySpacing.height(16),
-                                            MyText.bodyMedium("Phone"),
-                                            MySpacing.height(8),
-                                            TextFormField(
-                                              keyboardType:
-                                                  TextInputType.emailAddress,
-                                              decoration: InputDecoration(
-                                                labelText: "Enter Phone Number",
-                                                labelStyle:
-                                                    MyTextStyle.bodySmall(
-                                                        xMuted: true),
-                                                border: outlineInputBorder,
-                                                contentPadding:
-                                                    MySpacing.all(16),
-                                                isCollapsed: true,
-                                                floatingLabelBehavior:
-                                                    FloatingLabelBehavior.never,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                        actions: [
-                                          MyButton(
-                                            onPressed: () {
-                                              Navigator.pop(context);
-                                            },
-                                            elevation: 0,
-                                            backgroundColor:
-                                                contentTheme.primary,
-                                            borderRadiusAll:
-                                                AppStyle.buttonRadius.medium,
-                                            child: MyText.bodyMedium(
-                                              "Ok",
-                                              color: contentTheme.onPrimary,
-                                            ),
-                                          ),
-                                          MyButton(
-                                            onPressed: () {
-                                              Navigator.pop(context);
-                                            },
-                                            elevation: 0,
-                                            backgroundColor:
-                                                contentTheme.primary,
-                                            borderRadiusAll:
-                                                AppStyle.buttonRadius.medium,
-                                            child: MyText.bodyMedium(
-                                              "Cancel",
-                                              color: contentTheme.onPrimary,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
+                                    onPressed: () {},
                                     elevation: 0,
                                     padding: MySpacing.xy(12, 18),
                                     backgroundColor: contentTheme.primary,
                                     borderRadiusAll:
                                         AppStyle.buttonRadius.medium,
                                     child: MyText.bodySmall(
-                                      "Add Contact",
+                                      "Add Member",
                                       color: contentTheme.onPrimary,
                                     ),
                                   )
@@ -232,7 +121,7 @@ class _ContactsPageState extends State<ContactsPage>
                                 )),
                                 DataColumn(
                                     label: MyText.titleMedium(
-                                  'Phone Number',
+                                  'Email',
                                   fontWeight: 600,
                                 )),
                                 DataColumn(
@@ -242,12 +131,12 @@ class _ContactsPageState extends State<ContactsPage>
                                 )),
                                 DataColumn(
                                     label: MyText.titleMedium(
-                                  'Company',
+                                  'Role',
                                   fontWeight: 600,
                                 )),
                                 DataColumn(
                                     label: MyText.titleMedium(
-                                  'Created At',
+                                  'Status',
                                   fontWeight: 600,
                                 )),
                               ],
